@@ -57,6 +57,19 @@ $statusClass=match($order->status){'pending'=>'b-pending','waiting_payment'=>'b-
                     <option value="pay_at_store">ชำระที่หน้าร้าน</option>
                 </select>
             </div>
+            <div class="field" id="qr-wrap" style="grid-column:1 / -1">
+                <label>สแกนคิวอาร์โค้ดเพื่อชำระเงิน</label>
+                <div style="border:1px solid #dbe8f1;border-radius:16px;padding:18px;text-align:center;background:#fff">
+                    @if(file_exists(public_path('images/store-payment-qr.png')))
+                        <img src="{{ asset('images/store-payment-qr.png') }}" alt="คิวอาร์โค้ดชำระเงิน" style="width:min(280px,100%);height:auto;border-radius:12px">
+                        <div style="margin-top:10px;font-weight:700;color:#173b5e">ยอดชำระ {{ number_format($order->total_price,2) }} บาท</div>
+                    @else
+                        <div style="padding:18px;color:#9a6511;background:#fff7e8;border:1px solid #f2d39b;border-radius:12px">
+                            ยังไม่ได้ตั้งค่าคิวอาร์โค้ดของร้าน กรุณาติดต่อร้านเพื่อขอข้อมูลการโอนเงิน
+                        </div>
+                    @endif
+                </div>
+            </div>
             <div class="field" id="slip-wrap">
                 <label for="slip">หลักฐานการชำระเงิน</label>
                 <input type="file" name="slip" id="slip" accept=".jpg,.jpeg,.png" required>
@@ -85,10 +98,17 @@ $statusClass=match($order->status){'pending'=>'b-pending','waiting_payment'=>'b-
 <script>
 (function(){
     const method=document.getElementById('payment_method');
+    const qrWrap=document.getElementById('qr-wrap');
     const wrap=document.getElementById('slip-wrap');
     const slip=document.getElementById('slip');
-    if(!method||!wrap||!slip) return;
-    function toggle(){const transfer=method.value==='bank_transfer';wrap.style.display=transfer?'grid':'none';slip.required=transfer;if(!transfer) slip.value='';}
+    if(!method||!qrWrap||!wrap||!slip) return;
+    function toggle(){
+        const transfer=method.value==='bank_transfer';
+        qrWrap.style.display=transfer?'block':'none';
+        wrap.style.display=transfer?'grid':'none';
+        slip.required=transfer;
+        if(!transfer) slip.value='';
+    }
     method.addEventListener('change',toggle);toggle();
 })();
 </script>
