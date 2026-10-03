@@ -1,0 +1,8 @@
+@extends('layouts.admin')
+@section('title','ผู้ใช้งาน | PrintShop') @section('page-title','จัดการผู้ใช้งาน') @section('page-subtitle','ตรวจสอบบัญชีลูกค้า พนักงาน และกำหนดสิทธิ์การใช้งาน')
+@section('content')
+<div class="table-card"><div class="table-top"><div><h2>ผู้ใช้งานทั้งหมด</h2><span>บัญชีที่มีอยู่ในระบบ PrintShop</span></div></div><div class="table-scroll"><table><thead><tr><th>ID</th><th>ชื่อ</th><th>อีเมล</th><th>สิทธิ์</th><th>วันที่สมัคร</th><th>จัดการ</th></tr></thead><tbody>
+@forelse($users as $user)<tr><td>{{ $user->id }}</td><td><strong>{{ $user->name }}</strong></td><td>{{ $user->email }}</td><td>@if($user->role==='admin')<span class="badge b-completed">Admin</span>@elseif($user->role==='staff')<span class="badge b-processing">Staff</span>@else<span class="badge b-pending">Customer</span>@endif</td><td>{{ $user->created_at->format('d/m/Y H:i') }}</td><td>@if($user->id===auth()->id())<span class="badge b-completed">บัญชีที่กำลังใช้งาน</span>@else<form class="actions" method="POST" action="{{ route('admin.users.role',$user) }}">@csrf @method('PATCH')<select name="role" style="min-height:39px;border:1px solid #cbdbe6;border-radius:9px;padding:7px 10px"><option value="customer" @selected($user->role==='customer')>Customer</option><option value="staff" @selected($user->role==='staff')>Staff</option><option value="admin" @selected($user->role==='admin')>Admin</option></select><button class="btn btn-primary" type="submit" onclick="return confirm('ต้องการเปลี่ยนสิทธิ์ผู้ใช้งานนี้หรือไม่?')">บันทึก</button></form>@endif</td></tr>
+@empty<tr><td colspan="6" class="empty">ยังไม่มีผู้ใช้งาน</td></tr>@endforelse
+</tbody></table></div></div>
+@endsection

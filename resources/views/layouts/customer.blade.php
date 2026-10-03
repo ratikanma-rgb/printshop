@@ -1,0 +1,11 @@
+<!DOCTYPE html><html lang="th"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>@yield('title','PrintShop')</title><link rel="stylesheet" href="{{ asset('css/portal-shell.css') }}">@stack('styles')</head><body>
+<div class="portal"><aside class="sidebar"><div class="brand"><div class="brand-logo">🖨️</div><div class="brand-name">PrintShop</div></div><div class="side-label">CUSTOMER PORTAL</div><nav class="nav">
+<a href="{{ route('customer.dashboard') }}" class="nav-link {{ request()->routeIs('customer.dashboard') ? 'active' : '' }}"><span class="nav-ico">⌂</span><span>หน้าหลัก</span></a>
+<a href="{{ route('customer.orders.create') }}" class="nav-link {{ request()->routeIs('customer.orders.create') ? 'active' : '' }}"><span class="nav-ico">📄</span><span>สั่งพิมพ์งานใหม่</span></a>
+<a href="{{ route('customer.orders.index') }}" class="nav-link {{ request()->routeIs('customer.orders.index') || request()->routeIs('customer.orders.show') || request()->routeIs('customer.payments.*') ? 'active' : '' }}"><span class="nav-ico">📋</span><span>งานของฉัน</span></a>
+<a href="{{ route('customer.notifications.index') }}" class="nav-link {{ request()->routeIs('customer.notifications.*') ? 'active' : '' }}"><span class="nav-ico">🔔</span><span>การแจ้งเตือน @if(auth()->user()->unreadNotifications()->count()) ({{ auth()->user()->unreadNotifications()->count() }}) @endif</span></a>
+</nav><div class="side-spacer"></div><div class="side-user"><strong>{{ auth()->user()->name }}</strong><span>ลูกค้า</span><form method="POST" action="{{ route('logout') }}">@csrf<button class="logout">ออกจากระบบ</button></form></div></aside><main class="main"><div class="main-inner"><header class="page-head"><div><h1>@yield('page-title')</h1><p>@yield('page-subtitle')</p></div><div class="head-badge"><span class="dot"></span>บริการพิมพ์ออนไลน์</div></header>
+@if(session('success'))<div class="flash success">✅ {{ session('success') }}</div>@endif
+@if($errors->any())<div class="flash error">{{ $errors->first() }}</div>@endif
+@yield('content')</div></main></div>
+@stack('scripts')</body></html>

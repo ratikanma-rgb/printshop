@@ -1,0 +1,8 @@
+@extends('layouts.admin')
+@section('title','บริการ | PrintShop') @section('page-title','จัดการบริการ') @section('page-subtitle','เพิ่ม แก้ไข เปิด/ปิด และจัดการราคาบริการของร้าน')
+@section('content')
+<div class="table-card"><div class="table-top"><div><h2>บริการทั้งหมด</h2><span>รายการบริการที่ลูกค้าสามารถเลือกสั่งงาน</span></div><a class="btn btn-primary" href="{{ route('admin.services.create') }}">+ เพิ่มบริการ</a></div><div class="table-scroll"><table><thead><tr><th>ID</th><th>ชื่อบริการ</th><th>รายละเอียด</th><th>ราคา</th><th>หน่วย</th><th>สถานะ</th><th>จัดการ</th></tr></thead><tbody>
+@forelse($services as $service)<tr><td>{{ $service->id }}</td><td><strong>{{ $service->name }}</strong></td><td>{{ $service->description ?: '-' }}</td><td class="money">{{ number_format($service->price,2) }} บาท</td><td>{{ $service->unit }}</td><td>@if($service->is_active)<span class="badge b-ready">เปิดใช้งาน</span>@else<span class="badge b-cancelled">ปิดใช้งาน</span>@endif</td><td><div class="actions"><a class="btn btn-orange" href="{{ route('admin.services.edit',$service) }}">แก้ไข</a><form method="POST" action="{{ route('admin.services.toggle',$service) }}">@csrf @method('PATCH')<button class="btn btn-gray" type="submit">{{ $service->is_active ? 'ปิดบริการ' : 'เปิดบริการ' }}</button></form><form method="POST" action="{{ route('admin.services.destroy',$service) }}" onsubmit="return confirm('ต้องการลบบริการนี้หรือไม่?')">@csrf @method('DELETE')<button class="btn btn-red" type="submit">ลบ</button></form></div></td></tr>
+@empty<tr><td colspan="7" class="empty">ยังไม่มีบริการในระบบ</td></tr>@endforelse
+</tbody></table></div></div>
+@endsection

@@ -1,0 +1,14 @@
+แก้ 419 Page Expired หน้าเข้าสู่ระบบ
+- เอา regenerateToken() ออกจาก GET /login และ GET /register
+  เพราะการเปิด/รีเฟรชหน้า login อีกแท็บจะทำให้ token ของฟอร์มเดิมใช้ไม่ได้และเกิด 419
+- คง @csrf ในฟอร์ม POST ตามมาตรฐาน Laravel
+- ใช้ file session และ cookie แยกชื่อสำหรับ PrintShop
+- ล้าง session/view/cache ที่ติดมากับไฟล์ ZIP
+
+หลังแตกไฟล์บนเครื่อง:
+1) ปิด php artisan serve ตัวเก่าด้วย Ctrl+C
+2) เปิด Terminal ในโฟลเดอร์ printshop
+3) รัน: php artisan optimize:clear
+4) รัน: php artisan serve
+5) เปิด http://127.0.0.1:8000/login
+6) ถ้าเบราว์เซอร์เคยเปิดหน้าเก่าค้าง ให้ Ctrl+F5 หนึ่งครั้ง

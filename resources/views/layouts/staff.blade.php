@@ -1,0 +1,9 @@
+<!DOCTYPE html><html lang="th"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>@yield('title','PrintShop')</title><link rel="stylesheet" href="{{ asset('css/portal-shell.css') }}">@stack('styles')</head><body>
+<div class="portal"><aside class="sidebar"><div class="brand"><div class="brand-logo">🖨️</div><div class="brand-name">PrintShop</div></div><div class="side-label">STAFF WORKSPACE</div><nav class="nav">
+<a href="{{ route('staff.dashboard') }}" class="nav-link {{ request()->routeIs('staff.dashboard') ? 'active' : '' }}"><span class="nav-ico">📋</span><span>คิวงานหน้าร้าน</span></a>
+@if(request()->routeIs('staff.orders.*') || request()->routeIs('staff.payments.*'))<a href="{{ route('staff.dashboard') }}" class="nav-link active"><span class="nav-ico">←</span><span>กลับรายการคิว</span></a>@else<a href="#workflow" class="nav-link"><span class="nav-ico">🔄</span><span>ขั้นตอนการทำงาน</span></a>@endif
+</nav><div class="side-spacer"></div><div class="side-user"><strong>{{ auth()->user()->name }}</strong><span>พนักงานร้าน</span><form method="POST" action="{{ route('logout') }}">@csrf<button class="logout">ออกจากระบบ</button></form></div></aside><main class="main"><div class="main-inner"><header class="page-head"><div><h1>@yield('page-title')</h1><p>@yield('page-subtitle')</p></div><div class="head-badge"><span class="dot"></span>ระบบคิวออนไลน์พร้อมใช้งาน</div></header>
+@if(session('success'))<div class="flash success">✅ {{ session('success') }}</div>@endif
+@if($errors->any())<div class="flash error">{{ $errors->first() }}</div>@endif
+@yield('content')</div></main></div>
+@stack('scripts')</body></html>

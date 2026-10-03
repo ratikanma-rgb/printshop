@@ -1,0 +1,38 @@
+PRINTSHOP MANAGEMENT SYSTEM
+===========================
+
+เปิดใช้งานครั้งแรก
+-------------------
+1) แตกไฟล์โปรเจกต์ไว้ที่ C:\xampp\htdocs\printshop
+2) ดับเบิลคลิก SETUP_PRINTSHOP.bat
+3) รอจน Setup เสร็จ ระบบจะเปิด MySQL, Laravel Server, Queue Worker และหน้า Login ให้อัตโนมัติ
+
+เปิดใช้งานครั้งถัดไป
+---------------------
+ดับเบิลคลิก START_PRINTSHOP.bat เพียงไฟล์เดียว
+ไม่ต้องเปิด XAMPP Control Panel
+
+หน้าเว็บ
+--------
+http://127.0.0.1:8000/login
+
+บัญชีสาธิต (กรณีรัน Setup / migrate --seed)
+---------------------------------------------
+Admin
+admin@printshop.local
+Printshop123!
+
+Staff
+staff@printshop.local
+Printshop123!
+
+Customer
+customer@printshop.local
+Printshop123!
+
+หมายเหตุ
+--------
+- อย่าปิดหน้าต่าง Laravel Server และ Queue Worker ขณะใช้งานระบบ
+- MySQL จะถูกเปิดให้อัตโนมัติจาก C:\xampp\mysql\bin\mysqld.exe
+- Staff มีปุ่ม "สั่งพิมพ์" สำหรับเปิดใบงาน A4 และเปิดไฟล์ลูกค้าเพื่อสั่งพิมพ์
+- ถ้ามีข้อมูลเดิมในฐานข้อมูล printshop_db ระบบจะใช้ข้อมูลเดิม ไม่ล้างข้อมูลเมื่อกด START_PRINTSHOP.bat

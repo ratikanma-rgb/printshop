@@ -1,0 +1,1 @@
+Theme applied to 19 Blade views + unified CSS.

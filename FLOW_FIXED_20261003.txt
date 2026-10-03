@@ -1,0 +1,13 @@
+PrintShop flow after advisor feedback
+
+1. Customer selects print details and uploads work file(s).
+2. Customer submits the order for staff review. No payment/slip is accepted at this stage.
+3. Staff opens the uploaded file(s), verifies paper size, color, sides, actual pages, quantity and unit price.
+4. Staff can correct the details and final price, then approve for payment; or reject with a reason.
+5. Only after approval (status: waiting_payment) can the customer select payment method and upload a slip.
+6. Staff verifies payment. Only paid orders can enter processing/printing.
+
+If an old payment form still appears on the NEW ORDER page:
+- stop any old php artisan serve window using port 8000
+- run START_PRINTSHOP.bat from this folder, or run: php artisan optimize:clear
+- refresh the browser with Ctrl+F5
